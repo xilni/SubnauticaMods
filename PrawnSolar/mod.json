@@ -2,9 +2,12 @@
 	"Id": "PrawnSolar",
 	"DisplayName": "PrawnSolar",
 	"Author": "xilni",
-	"Version": "1.0",
+	"Version": "1.0.1",
 	"Enable": true,
 	"Game": "Subnautica",
 	"AssemblyName": "PrawnSolar.dll",
-	"Dependencies": [ "SMLHelper" ]
+	"Dependencies": [ "SMLHelper" ],
+	"NexusId": {
+		"Subnautica": "572"
+	}
 }
