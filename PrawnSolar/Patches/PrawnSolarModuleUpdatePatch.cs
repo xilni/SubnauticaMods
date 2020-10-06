@@ -16,10 +16,10 @@ namespace PrawnSolar.Patches
         static void Prefix(Exosuit __instance)
         {
             // Get module count
-            var count = __instance.modules.GetCount(PrawnSolar.prawnSolarModule.TechType);
+            var moduleCount = __instance.modules.GetCount(PrawnSolar.prawnSolarModule.TechType);
 
             // If equipped, proceed
-            if (count > 0)
+            if (moduleCount > 0)
             {
                 // Determine light value
                 DayNightCycle main = DayNightCycle.main;
@@ -28,9 +28,9 @@ namespace PrawnSolar.Patches
                     return;
                 }
 
-                float num = Mathf.Clamp01((maxSolarDepth + __instance.transform.position.y) / maxSolarDepth);
+                float depthScalar = Mathf.Clamp01((maxSolarDepth + __instance.transform.position.y) / maxSolarDepth);
                 float localLightScalar = main.GetLocalLightScalar();
-                float amount = 1f * localLightScalar * num * (float)count;
+                float amount = localLightScalar * depthScalar * (float)moduleCount;
 
                 // Add energy to vehicle
                 addEnergyMethod.Invoke(__instance, new object[] { amount * main.deltaTime });
