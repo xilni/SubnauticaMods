@@ -4,7 +4,7 @@
 
 | Mod name   | Description                                                               | URL                                                            |
 |------------|---------------------------------------------------------------------------|----------------------------------------------------------------|
-| PrawnSolar | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://github.com/xilni/SubnauticaMods/tree/master/PrawnSolar |
+| PrawnSolar | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/572 |
 
 ## Credits
 
