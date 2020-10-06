@@ -1,6 +1,7 @@
 ﻿using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace PrawnSolar.Modules
 {
@@ -20,6 +21,12 @@ namespace PrawnSolar.Modules
         public override CraftTree.Type FabricatorType => CraftTree.Type.SeamothUpgrades;
         public override string[] StepsToFabricatorTab => new string[] { "ExosuitModules" };
         public override QuickSlotType QuickSlotType => QuickSlotType.Passive;
+
+        // Use the Prawn Thermal Reactor module GameObject since all modules have the same model
+        public override GameObject GetGameObject()
+        {
+            return GameObject.Instantiate(CraftData.GetPrefabForTechType(TechType.ExosuitThermalReactorModule));
+        }
 
         protected override TechData GetBlueprintRecipe()
         {
