@@ -33,7 +33,7 @@ namespace PrawnSolar.Patches
                 float amount = 1f * localLightScalar * num * (float)count;
 
                 // Add energy to vehicle
-                addEnergyMethod.Invoke(__instance, new object[] { amount * Time.deltaTime });
+                addEnergyMethod.Invoke(__instance, new object[] { amount * main.deltaTime });
             }
         }
     }
