@@ -1,0 +1,13 @@
+﻿{
+	"Id": "SwimChargeInventory",
+	"DisplayName": "SwimChargeInventory",
+	"Author": "xilni",
+	"Version": "1.1.0",
+	"Enable": true,
+	"Game": "Subnautica",
+	"AssemblyName": "SwimChargeInventory.dll",
+	"Dependencies": [ "SMLHelper" ],
+	"NexusId": {
+		"Subnautica": "576"
+	}
+}
