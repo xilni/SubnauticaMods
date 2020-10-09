@@ -27,7 +27,7 @@ namespace SwimChargeInventory.Patches
 
                 if (swimChargeFinsEquipped)
                 {
-                    // Check if holding item and it needs a charge
+                    // Check if already holding item and it needs a charge
                     PlayerTool heldTool = Inventory.main.GetHeldTool();
                     bool heldToolNeedsCharge = false;
                     if (heldTool != null)
@@ -39,35 +39,28 @@ namespace SwimChargeInventory.Patches
                         }
                     }
 
-                    Console.WriteLine($"[SwimChargeInventory] heldToolNeedsCharge {heldToolNeedsCharge}");
-
                     // If no held tool or if it's fully charged, search for and charge an item
                     if (heldTool == null || !heldToolNeedsCharge)
                     {
-                        Console.WriteLine("[SwimChargeInventory] In charging loop!");
-
                         // Iterate through inventory looking for chargeables
                         foreach (var item in Inventory.Get().container)
                         {
-                            // If chargeable
-                            if (item.item.TryGetComponent<EnergyMixin>(out EnergyMixin energyMixin))
-                            {
-                                Console.WriteLine($"[SwimChargeInventory] Found chargeable {item.item.GetTechType()}: {energyMixin.charge} / {energyMixin.capacity}");
+                            // Is item chargeable?
+                            if (item.item.gameObject.TryGetComponent<EnergyMixin>(out EnergyMixin energyMixinComponent)) {
 
-                                // If not fully charged, addEnergy
-                                if (energyMixin.charge < energyMixin.capacity)
+                                // Does item need charging?
+                                var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
+                                if (battery.charge < battery.capacity)
                                 {
-                                    energyMixin.AddEnergy(0.005f);
-                                    Console.WriteLine($"[SwimChargeInventory] Adding energy to {item.item.GetTechType()}");
+                                    // Add some charge
+                                    battery.charge += 0.005f;
                                     break;
                                 }
-
                             }
                         }
                     }
                 }
             }
         }
-
     }
 }
