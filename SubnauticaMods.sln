@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwimChargeInventory", "SwimChargeInventory\SwimChargeInventory.csproj", "{E1EAFB92-F84C-4967-9343-8123A6E79565}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F24AA19B-ADD1-4067-8D28-544883D26FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F24AA19B-ADD1-4067-8D28-544883D26FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F24AA19B-ADD1-4067-8D28-544883D26FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1EAFB92-F84C-4967-9343-8123A6E79565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1EAFB92-F84C-4967-9343-8123A6E79565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1EAFB92-F84C-4967-9343-8123A6E79565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1EAFB92-F84C-4967-9343-8123A6E79565}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
