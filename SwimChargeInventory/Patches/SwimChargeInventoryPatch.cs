@@ -10,76 +10,80 @@ namespace SwimChargeInventory.Patches
     {
         static void Prefix(UpdateSwimCharge __instance)
         {
-            // 
-            if (Player.main.IsUnderwater() && Player.main.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 2f)
+            // If not underwater or moving quick enough, return early
+            if (!Player.main.IsUnderwater() || Player.main.gameObject.GetComponent<Rigidbody>().velocity.magnitude <= 2f)
             {
-                bool swimChargeFinsEquipped = false;
+                return;
+            }
 
-                // Check if swim charge or ultra glide swim charge fins equipped
-                if (TechTypeHandler.TryGetModdedTechType("ugscfins", out TechType ultraGlideSwimChargeTechType))
-                {
-                    swimChargeFinsEquipped = (Inventory.Get().equipment.GetCount(TechType.SwimChargeFins) + Inventory.Get().equipment.GetCount(ultraGlideSwimChargeTechType)) > 0;
-                }
-                else
-                {
-                    swimChargeFinsEquipped = Inventory.Get().equipment.GetCount(TechType.SwimChargeFins) > 0;
-                }
+            // If no swim fins equipped, return early
+            if (!SwimChargeFinsEquipped())
+            {
+                return;
+            }
 
-                if (swimChargeFinsEquipped)
+            // If held tool needs charge, return early and let unpatched method handle it
+            if (HeldToolNeedsCharge())
+            {
+                return;
+            }
+
+            // Check config to charge batteries
+            var chargeBatteries = SwimChargeInventory.config.chargeBatteries;
+
+            // Iterate through inventory looking for chargeables
+            foreach (var item in Inventory.Get().container)
+            {
+                // Is item chargeable tool?
+                if (item.item.gameObject.TryGetComponent(out EnergyMixin energyMixinComponent))
                 {
-                    // Check if already holding item and it needs a charge
-                    PlayerTool heldTool = Inventory.main.GetHeldTool();
-                    bool heldToolNeedsCharge = false;
-                    if (heldTool != null)
+                    // Does item need charging?
+                    var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
+                    if (battery.charge < battery.capacity)
                     {
-                        // Is held tool chargeable and below 100% charge?
-                        if (heldTool.gameObject.TryGetComponent<EnergyMixin>(out EnergyMixin heldToolEnergyMixin) && (heldToolEnergyMixin.charge < heldToolEnergyMixin.capacity))
-                        {
-                            heldToolNeedsCharge = true;
-                        }
+                        Console.WriteLine($"Charging {item.item.GetTechType()}");
+                        // Add some charge
+                        battery.charge += 0.005f;
+                        break;
                     }
+                }
 
-                    // If no held tool or if it's fully charged, search for and charge an item
-                    if (heldTool == null || !heldToolNeedsCharge)
-                    {
-                        // Check config to charge batteries
-                        var chargeBatteries = SwimChargeInventory.config.chargeBatteries;
-
-                        // Iterate through inventory looking for chargeables
-                        foreach (var item in Inventory.Get().container)
-                        {
-                            // Is item chargeable tool?
-                            if (item.item.gameObject.TryGetComponent<EnergyMixin>(out EnergyMixin energyMixinComponent)) {
-                                // Does item need charging?
-                                var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
-                                if (battery.charge < battery.capacity)
-                                {
-                                    Console.WriteLine($"Charging {item.item.GetTechType()}");
-                                    // Add some charge
-                                    battery.charge += 0.005f;
-                                    break;
-                                }
-                            }
-
-                            // If we're charging batteries
-                            if (chargeBatteries)
-                            {
-                                // Is item battery?
-                                if (item.item.TryGetComponent<IBattery>(out IBattery ibatteryComponent))
-                                {
-                                    // Does battery need charging?
-                                    if (ibatteryComponent.charge < ibatteryComponent.capacity)
-                                    {
-                                        // Add some charge
-                                        ibatteryComponent.charge += 0.005f;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                // If we're charging batteries
+                if (chargeBatteries &&
+                    item.item.TryGetComponent<IBattery>(out IBattery ibatteryComponent) &&
+                    ibatteryComponent.charge < ibatteryComponent.capacity)
+                {
+                    // Add some charge
+                    ibatteryComponent.charge += 0.005f;
+                    break;
                 }
             }
+        }
+
+        private static bool HeldToolNeedsCharge()
+        {
+            var heldTool = Inventory.main.GetHeldTool();
+            var heldToolNeedsCharge = false;
+
+            // If held item
+            if (heldTool != null)
+            {
+                // Is held tool chargeable and below 100% charge?
+                if (heldTool.gameObject.TryGetComponent(out EnergyMixin heldToolEnergyMixin) && (heldToolEnergyMixin.charge < heldToolEnergyMixin.capacity))
+                {
+                    heldToolNeedsCharge = true;
+                }
+            }
+
+            return heldToolNeedsCharge;
+        }
+
+        private static bool SwimChargeFinsEquipped()
+        {
+            // Check if swim charge or ultra glide swim charge fins equipped (if MoreModifiedItems mod present)
+            return TechTypeHandler.TryGetModdedTechType("ugscfins", out TechType ultraGlideSwimChargeTechType)
+                ? (Inventory.Get().equipment.GetCount(TechType.SwimChargeFins) + Inventory.Get().equipment.GetCount(ultraGlideSwimChargeTechType)) > 0
+                : Inventory.Get().equipment.GetCount(TechType.SwimChargeFins) > 0;
         }
     }
 }
