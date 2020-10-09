@@ -1,0 +1,10 @@
+﻿{
+	"Id": "SwimChargeInventory",
+	"DisplayName": "SwimChargeInventory",
+	"Author": "xilni",
+	"Version": "1.0.0",
+	"Enable": true,
+	"Game": "Subnautica",
+	"AssemblyName": "SwimChargeInventory.dll",
+	"Dependencies": [ "SMLHelper" ]
+}
