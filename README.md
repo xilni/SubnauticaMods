@@ -4,7 +4,8 @@
 
 | Mod name   | Description                                                               | URL                                                            |
 |------------|---------------------------------------------------------------------------|----------------------------------------------------------------|
-| PrawnSolar | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/572 |
+| PrawnSolar | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/572                  |
+| SwimChargeInventory | Allows the Swim Charge Fins to charge items in your inventory | https://www.nexusmods.com/subnautica/mods/576 |
 
 ## Credits
 
