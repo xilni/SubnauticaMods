@@ -42,19 +42,38 @@ namespace SwimChargeInventory.Patches
                     // If no held tool or if it's fully charged, search for and charge an item
                     if (heldTool == null || !heldToolNeedsCharge)
                     {
+                        // Check config to charge batteries
+                        var chargeBatteries = SwimChargeInventory.config.chargeBatteries;
+
                         // Iterate through inventory looking for chargeables
                         foreach (var item in Inventory.Get().container)
                         {
-                            // Is item chargeable?
+                            // Is item chargeable tool?
                             if (item.item.gameObject.TryGetComponent<EnergyMixin>(out EnergyMixin energyMixinComponent)) {
-
                                 // Does item need charging?
                                 var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
                                 if (battery.charge < battery.capacity)
                                 {
+                                    Console.WriteLine($"Charging {item.item.GetTechType()}");
                                     // Add some charge
                                     battery.charge += 0.005f;
                                     break;
+                                }
+                            }
+
+                            // If we're charging batteries
+                            if (chargeBatteries)
+                            {
+                                // Is item battery?
+                                if (item.item.TryGetComponent<IBattery>(out IBattery ibatteryComponent))
+                                {
+                                    // Does battery need charging?
+                                    if (ibatteryComponent.charge < ibatteryComponent.capacity)
+                                    {
+                                        // Add some charge
+                                        ibatteryComponent.charge += 0.005f;
+                                        break;
+                                    }
                                 }
                             }
                         }
