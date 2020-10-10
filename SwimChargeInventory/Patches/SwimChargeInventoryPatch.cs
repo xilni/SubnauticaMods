@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using SMLHelper.V2.Handlers;
-using System;
 using UnityEngine;
 
 namespace SwimChargeInventory.Patches
@@ -41,7 +40,6 @@ namespace SwimChargeInventory.Patches
                     var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
                     if (battery.charge < battery.capacity)
                     {
-                        Console.WriteLine($"Charging {item.item.GetTechType()}");
                         // Add some charge
                         battery.charge += 0.005f;
                         break;
