@@ -18,7 +18,3 @@ Thank you to [Metious](https://github.com/Metious) for volunteering to be the gu
 **BTC:** bc1q5vuhqz4z6x5rwzdz8z3tsj5uzgl2d0j5ewtzvl
 
 **ETH:** 0x150A1472d41063DD07B45C03327bDfF30742695F
-
-**BCH:** bitcoincash:qpdhj0nvul8yzj8meugt9mg6g0qfjpnn2cvqav570z
-
-**BTG:** AKCPbGRavgwGKJYbwjF9Lo7UVkDqaUQfVp
