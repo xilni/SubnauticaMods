@@ -1,21 +1,31 @@
-﻿using HarmonyLib;
-using QModManager.API.ModLoading;
+﻿using BepInEx;
+using HarmonyLib;
 using SMLHelper.V2.Handlers;
 using SwimChargeInventory.Configuration;
 
 namespace SwimChargeInventory
 {
-    [QModCore]
-    public static class SwimChargeInventory
+    [BepInPlugin(GUID, MODNAME, VERSION)]
+    public class SwimChargeInventory : BaseUnityPlugin
     {
-        // 
-        internal static Config config { get; } = OptionsPanelHandler.RegisterModOptions<Config>();
+        internal const string MODNAME = "SwimChargeInventory";
+        internal const string ASSEMBLY_TITLE = "SwimChargeInventory (BepInEx)";
+        internal const string AUTHOR = "xilni";
+        internal const string GUID = "com.xilni.swimchargeinventory";
+        internal const string VERSION = "2.0.0.0";
 
-        [QModPatch]
-        public static void Load()
+        internal static Config config { get; } = OptionsPanelHandler.RegisterModOptions<Config>();
+        internal static BepInEx.Logging.ManualLogSource logger;
+
+        public void Start()
         {
-            Harmony harmony = new Harmony("com.xilni.swimchargeinventory");
+            logger = Logger;
+            logger.LogInfo("Loading patches.");
+
+            Harmony harmony = new Harmony(GUID);
             harmony.PatchAll();
+
+            logger.LogInfo("Done loading all patches.");
         }
     }
 }

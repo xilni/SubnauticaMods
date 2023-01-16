@@ -27,17 +27,35 @@ namespace SwimChargeInventory.Patches
                 return;
             }
 
+            // Iterate through inventory looking for chargeables
+            SearchInventoryAndCharge();
+        }
+
+        private static bool HeldToolNeedsCharge()
+        {
+            var heldTool = Inventory.main.GetHeldTool();
+
+            // Is held tool chargeable and below 100% charge?
+            if (heldTool && heldTool.gameObject.TryGetComponent(out EnergyMixin heldToolEnergyMixin) && (heldToolEnergyMixin.charge < heldToolEnergyMixin.capacity))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void SearchInventoryAndCharge()
+        {
             // Check config to charge batteries
             var chargeBatteries = SwimChargeInventory.config.chargeBatteries;
 
-            // Iterate through inventory looking for chargeables
             foreach (var item in Inventory.Get().container)
             {
                 // Is item chargeable tool?
                 if (item.item.gameObject.TryGetComponent(out EnergyMixin energyMixinComponent))
                 {
                     // Does item need charging?
-                    var battery = energyMixinComponent.GetBattery().GetComponent<IBattery>();
+                    var battery = energyMixinComponent.GetBattery();
                     if (battery.charge < battery.capacity)
                     {
                         // Add some charge
@@ -56,24 +74,6 @@ namespace SwimChargeInventory.Patches
                     break;
                 }
             }
-        }
-
-        private static bool HeldToolNeedsCharge()
-        {
-            var heldTool = Inventory.main.GetHeldTool();
-            var heldToolNeedsCharge = false;
-
-            // If held item
-            if (heldTool != null)
-            {
-                // Is held tool chargeable and below 100% charge?
-                if (heldTool.gameObject.TryGetComponent(out EnergyMixin heldToolEnergyMixin) && (heldToolEnergyMixin.charge < heldToolEnergyMixin.capacity))
-                {
-                    heldToolNeedsCharge = true;
-                }
-            }
-
-            return heldToolNeedsCharge;
         }
 
         private static bool SwimChargeFinsEquipped()
