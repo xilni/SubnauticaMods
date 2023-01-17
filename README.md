@@ -1,11 +1,18 @@
 # SubnauticaMods
 
-## Mods
+## BepInEx (Subnautica 2.0 and later)
 
 | Mod name   | Description                                                               | URL                                                            |
 |------------|---------------------------------------------------------------------------|----------------------------------------------------------------|
-| PrawnSolar | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/572 |
-| SwimChargeInventory | Allows the Swim Charge Fins to charge items in your inventory | https://www.nexusmods.com/subnautica/mods/576 |
+| PrawnSolar (BepInEx) | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/1170 |
+| SwimChargeInventory (BepInEx) | Allows the Swim Charge Fins to charge items in your inventory | https://www.nexusmods.com/subnautica/mods/1169 |
+
+## Legacy QMod (Pre Subnautica 2.0)
+
+| Mod name   | Description                                                               | URL                                                            |
+|------------|---------------------------------------------------------------------------|----------------------------------------------------------------|
+| PrawnSolar (Legacy) | Adds a Solar charger module to the Prawn Suit like the one on the Seamoth | https://www.nexusmods.com/subnautica/mods/572 |
+| SwimChargeInventory (Legacy) | Allows the Swim Charge Fins to charge items in your inventory | https://www.nexusmods.com/subnautica/mods/576  |
 
 ## Credits
 
