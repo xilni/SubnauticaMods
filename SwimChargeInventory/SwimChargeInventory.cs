@@ -12,7 +12,7 @@ namespace SwimChargeInventory
         internal const string ASSEMBLY_TITLE = "SwimChargeInventory (BepInEx)";
         internal const string AUTHOR = "xilni";
         internal const string GUID = "com.xilni.swimchargeinventory";
-        internal const string VERSION = "2.0.0.0";
+        internal const string VERSION = "2.0.1.0";
 
         internal static Config config { get; } = OptionsPanelHandler.RegisterModOptions<Config>();
         internal static BepInEx.Logging.ManualLogSource logger;

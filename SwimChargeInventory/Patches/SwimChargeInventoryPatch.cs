@@ -56,12 +56,17 @@ namespace SwimChargeInventory.Patches
                 {
                     // Does item need charging?
                     var battery = energyMixinComponent.GetBattery();
-                    if (battery.charge < battery.capacity)
+
+                    // No battery or full battery, move on to next item for this update cycle
+                    if (battery == null || battery.charge == battery.capacity)
                     {
-                        // Add some charge
-                        battery.charge += 0.005f;
-                        break;
+                        continue;
                     }
+
+                    // Else charge
+                    battery.charge += 0.005f;
+                    break;
+
                 }
 
                 // If we're charging batteries
