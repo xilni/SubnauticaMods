@@ -1,25 +1,32 @@
 ﻿using HarmonyLib;
-using QModManager.API.ModLoading;
-using System;
+using BepInEx;
 
 namespace PrawnSolar
 {
-    [QModCore]
-    public static class PrawnSolar
+    [BepInPlugin(GUID, MODNAME, VERSION)]
+    public class PrawnSolar : BaseUnityPlugin
     {
+        internal const string MODNAME = "PrawnSolar";
+        internal const string ASSEMBLY_TITLE = "PrawnSolar (BepInEx)";
+        internal const string AUTHOR = "xilni";
+        internal const string GUID = "com.xilni.prawnsolarmodule";
+        internal const string VERSION = "2.0.0.0";
+
+        internal static BepInEx.Logging.ManualLogSource logger;
+
         internal static Modules.PrawnSolarModule prawnSolarModule = new Modules.PrawnSolarModule();
 
-        [QModPatch]
-        public static void Load()
+        public void Start()
         {
-            Console.WriteLine("[PrawnSolar] Starting up.");
+            logger = Logger;
+            logger.LogInfo("Loading patches.");
 
             prawnSolarModule.Patch();
 
-            Harmony harmony = new Harmony("com.xilni.prawnsolarmodule");
+            Harmony harmony = new Harmony(GUID);
             harmony.PatchAll();
 
-            Console.WriteLine("[PrawnSolar] Patched.");
+            logger.LogInfo("Done loading all patches.");
         }
     }
 }

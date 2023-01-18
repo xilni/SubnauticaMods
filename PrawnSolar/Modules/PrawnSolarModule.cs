@@ -23,9 +23,13 @@ namespace PrawnSolar.Modules
         public override QuickSlotType QuickSlotType => QuickSlotType.Passive;
 
         // Use the Prawn Thermal Reactor module GameObject since all modules have the same model
-        public override GameObject GetGameObject()
+        public override System.Collections.IEnumerator GetGameObjectAsync(IOut<GameObject> gameObject)
         {
-            return GameObject.Instantiate(CraftData.GetPrefabForTechType(TechType.ExosuitThermalReactorModule));
+            CoroutineTask<GameObject> task = CraftData.GetPrefabForTechTypeAsync(TechType.ExosuitThermalReactorModule);
+            yield return task;
+            GameObject origibalPrefab = task.GetResult();
+            GameObject resultPrefab = Object.Instantiate(origibalPrefab);
+            gameObject.Set(resultPrefab);
         }
 
         protected override TechData GetBlueprintRecipe()
